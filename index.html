@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Global Terrorism</title>
+
+    <!-- Libraries -->
+    <script src="https://code.jquery.com/jquery.min.js"></script>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <script src="http://d3js.org/d3.v4.min.js"></script>
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/main.css" />
+    <link rel="stylesheet" href="css/scroll.css" />
+
+    <!-- your script file -->
+    <script src="js/BarChart.js"></script>
+    <script src="js/scroll.js"></script>
+    <script src="js/main.js"></script>
+</head>
+<body>
+    <div class="container" ng-app="myApp" id="app" ng-controller="MainController">
+        <h1>Global Terrorism</h1>
+        <div id="sandbox">
+            <div id='graphic'>
+                <div id='nav-bar'>
+                </div>
+
+                <div id='sections'>
+                    <section class="step">
+                        <div class="title">Landing</div>
+                    </section>
+                    <section class="step">
+                        <div class="title">At a Glance</div>
+                    </section>
+                    <section class="step">
+                        <div class="title">Count of Incidents</div>
+                    </section>
+                    <section class="step">
+                        <div class="title">Highest Ransom</div>
+                    </section>
+                    <section class="step">
+                        <div class="title">Cause and Frequency of Attacks</div>
+                    </section>
+                    <section class="step">
+                        <div class="title">Common Methods of Claims</div>
+                    </section>
+                </div>
+                
+                <div id='vis'>
+                </div>
+            </div>
+        </div>
+</body>
+</html>
