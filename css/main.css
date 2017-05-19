@@ -33,3 +33,31 @@ p {
 form {
   margin-bottom:20px;
 }
+
+.node circle {
+  fill: #fff;
+  stroke: steelblue;
+  stroke-width: 3px;
+}
+
+.node text {
+  font: 12px sans-serif;
+  /*text-anchor: start;*/
+}
+
+.link {
+  fill: none;
+  stroke: #ccc;
+  stroke-width: 2px;
+}
+
+#nav-bar {
+  /*display: inline-block;*/
+  position: absolute;
+  float: top;
+  top: 60px;
+  z-index: 1;
+  margin-left: 0;
+  height: 600px;
+  width: 600px;
+}
