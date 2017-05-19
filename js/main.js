@@ -7,29 +7,24 @@ var data = [{
     value: 34
 }];
 
-// var treeData = [{
-//     "name": "Landing",
-//     "children": [{
-//         "name": "At a Glance",
-//         "parent": "Landing",
-//         "children": [{
-//             "name": "Count of Incidents",
-//             "parent": "At a Glance",
-//             "children": [{
-//                 "name": "Highest Ransom",
-//                 "parent": "Count of Incidents",
-//                 "children": [{
-//                     "name": "Cause and Frequency of Attacks",
-//                     "parent": "Highest Ransom",
-//                     "children": [{
-//                         "name": "Common Methods of Claims",
-//                         "parent": "Cause and Frequency of Attacks"}]
-//                     }]
-//                 }]
-//             }]
-//         }]
-//     }
-// ];
+var treeData = {
+    "name": "Landing",
+    "children": [{ 
+        "name": "At a Glance",
+        "children": [{
+            "name": "Count of Incidents",
+            "children": [{
+                "name": "Highest Ransom",
+                "children": [{
+                    "name": "Cause and Frequency of Attacks",
+                    "children": [{
+                        "name": "Common Method of Claims"
+                    }]
+                }]
+            }]
+        }]
+    }]
+};
 
 $(function() {
     // Instantiate your chart with given settings
@@ -67,25 +62,6 @@ $(function() {
 
 ///////////////////
 
-var treeData = {
-    "name": "Landing",
-    "children": [{ 
-        "name": "At a Glance",
-        "children": [{
-            "name": "Count of Incidents",
-            "children": [{
-                "name": "Highest Ransom",
-                "children": [{
-                    "name": "Cause and Frequency of Attacks",
-                    "children": [{
-                        "name": "Common Method of Claims"
-                    }]
-                }]
-            }]
-        }]
-    }]
-};
-
 // Set the dimensions and margins of the diagram
 var margin = {top: 20, right: 90, bottom: 30, left: 90},
     width = 1200 - margin.left - margin.right,
@@ -94,7 +70,7 @@ var margin = {top: 20, right: 90, bottom: 30, left: 90},
 // append the svg object to the body of the page
 // appends a 'group' element to 'svg'
 // moves the 'group' element to the top left margin
-var svg = d3.select("body").append("svg")
+var svg = d3.select("#nav-bar").append("svg")
     .attr("width", width + margin.right + margin.left)
     .attr("height", height + margin.top + margin.bottom)
   .append("g")
@@ -113,20 +89,7 @@ root = d3.hierarchy(treeData, function(d) { return d.children; });
 root.x0 = height / 2;
 root.y0 = 0;
 
-
-// Collapse after the second level
-// root.children.forEach(collapse);
-
 updateTree(root);
-
-// Collapse the node and all it's children
-// function collapse(d) {
-//   if(d.children) {
-//     d._children = d.children
-//     d._children.forEach(collapse)
-//     d.children = null
-//   }
-// }
 
 function updateTree(source) {
 
@@ -166,12 +129,8 @@ function updateTree(source) {
   // Add labels for the nodes
   nodeEnter.append('text')
       .attr("dy", ".35em")
-      .attr("x", function(d) {
-          return d.children || d._children ? -13 : 13;
-      })
-      .attr("text-anchor", function(d) {
-          return d.children || d._children ? "end" : "start";
-      })
+      .attr("x", 13)
+      .attr("text-anchor", "start")
       .text(function(d) { return d.data.name; });
 
   // UPDATE
@@ -256,18 +215,6 @@ function updateTree(source) {
 
     return path
   }
-
-//   // Toggle children on click.
-//   function click(d) {
-//     if (d.children) {
-//         d._children = d.children;
-//         d.children = null;
-//       } else {
-//         d.children = d._children;
-//         d._children = null;
-//       }
-//     updateTree(d);
-//   }
 }
 
 //////////////////

@@ -42,7 +42,6 @@ form {
 
 .node text {
   font: 12px sans-serif;
-  /*text-anchor: start;*/
 }
 
 .link {
@@ -52,12 +51,6 @@ form {
 }
 
 #nav-bar {
-  /*display: inline-block;*/
-  position: absolute;
-  float: top;
-  top: 60px;
-  z-index: 1;
-  margin-left: 0;
-  height: 600px;
-  width: 600px;
+  display: inline-block;
+  position: fixed;
 }
