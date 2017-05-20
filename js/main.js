@@ -7,6 +7,10 @@ var data = [{
     value: 34
 }];
 
+var fillColor;
+var nodeFill;
+
+
 var treeData = {
     "name": "Landing",
     "children": [{ 
@@ -38,34 +42,51 @@ $(function() {
         .datum(data)
         .call(myChart);
 
-    var update = function(index) {
+
+    var color = function(index){
         switch (index) {
             case 0:
-                var fillColor = 'blue';
-                break;
+                fillColor = 'blue';
+                nodeFill = 'blue';
             case 1:
-                var fillColor = 'red';
-                break;
+                fillColor = 'red';
+                nodeFill = 'red';                
             case 2:
-                var fillColor = 'orange';
-                break;
+                fillColor = 'orange';
+                nodeFill = 'orange';                
             case 3:
-                var fillColor = 'black';
-                break;
+                fillColor = 'black';
+                nodeFill = 'black';                
             default:
-                var fillColor = 'black';
-                break;
+                fillColor = 'black';
+                nodeFill = '#fff';                
+            return fillColor
         }
+
+    }
+
+    var update = function(index) {
+        color(index);
         myChart.fillColor(fillColor);
+        changeNodeFill(nodeFill);
         chart.datum(data).call(myChart);
     };
 
 ///////////////////
 
-// Set the dimensions and margins of the diagram
-var margin = {top: 20, right: 90, bottom: 30, left: 90},
-    width = 1200 - margin.left - margin.right,
-    height = 1200 - margin.top - margin.bottom;
+    // Set the dimensions and margins of the diagram
+    var margin = {top: 20, right: 90, bottom: 30, left: 20},
+        width = 500 - margin.left - margin.right,
+        height = 1000 - margin.top - margin.bottom;
+
+    var linkMargin = 0;
+    var nodeFill = "#fff"
+    
+    var changeNodeFill = function(value) {
+        if (!arguments.length) return nodeFill;
+        nodeFill = value;
+        updateTree(root);
+    };
 
 // append the svg object to the body of the page
 // appends a 'group' element to 'svg'
@@ -101,7 +122,7 @@ function updateTree(source) {
       links = treeData.descendants().slice(1);
 
   // Normalize for fixed-depth.
-  nodes.forEach(function(d){ d.y = d.depth * 100});
+  nodes.forEach(function(d){ d.y = d.depth * 140});
 
   // ****************** Nodes section ***************************
 
@@ -112,9 +133,11 @@ function updateTree(source) {
   // Enter any new modes at the parent's previous position.
   var nodeEnter = node.enter().append('g')
       .attr('class', 'node')
-      .attr("transform", function(d) {
-        // return "translate(" + source.y0 + "," + source.x0 + ")";
-        return "translate(" + d.x + "," + d.y + ")";
+      .attr('id', (d, i) => {
+          return "node"+i;
+      })
+      .attr("transform", function(d) {   
+        return "translate(" + linkMargin + "," + linkMargin + ")";        
     });
     // .on('click', click);
 
@@ -122,8 +145,9 @@ function updateTree(source) {
   nodeEnter.append('circle')
       .attr('class', 'node')
       .attr('r', 1e-6)
-      .style("fill", function(d) {
-          return d._children ? "lightsteelblue" : "#fff";
+      .style("fill", (d)=>{
+          color(d.id)
+        //   console.log(d.id)
       });
 
   // Add labels for the nodes
@@ -133,31 +157,30 @@ function updateTree(source) {
       .attr("text-anchor", "start")
       .text(function(d) { return d.data.name; });
 
-  // UPDATE
+  // Update
   var nodeUpdate = nodeEnter.merge(node);
 
   // Transition to the proper position for the node
   nodeUpdate.transition()
     .duration(duration)
     .attr("transform", function(d) { 
-        // return "translate(" + d.y + "," + d.x + ")";
-        return "translate(" + d.x + "," + d.y + ")";
+        return "translate(" + linkMargin + "," + d.y + ")";
      });
 
   // Update the node attributes and style
   nodeUpdate.select('circle.node')
     .attr('r', 10)
-    .style("fill", function(d) {
-        return d._children ? "lightsteelblue" : "#fff";
-    })
+    .style("fill", nodeFill)
     .attr('cursor', 'pointer');
+
+d3.select("#node1").style("fill", "black")
 
 
   // Remove any exiting nodes
   var nodeExit = node.exit().transition()
       .duration(duration)
       .attr("transform", function(d) {
-          return "translate(" + source.y + "," + source.x + ")";
+          return "translate(" + linkMargin + "," + source.x + ")";
       })
       .remove();
 
@@ -202,16 +225,21 @@ function updateTree(source) {
 
   // Store the old positions for transition.
   nodes.forEach(function(d){
-    d.x0 = d.x;
+    d.x0 = d.x;    
     d.y0 = d.y;
   });
 
   // Creates a curved (diagonal) path from parent to the child nodes
   function diagonal(s, d) {
-    path = `M ${s.x} ${s.y}
-        C ${(s.x + d.x) / 2} ${s.y},
-            ${(s.x + d.x) / 2} ${d.y},
-            ${d.x} ${d.y}`
+    // path = `M ${s.x} ${s.y}
+    //     C ${(s.x + d.x) / 2} ${s.y},
+    //         ${(s.x + d.x) / 2} ${d.y},
+    //         ${d.x} ${d.y}`
+
+    path = `M ${linkMargin} ${s.y}
+            C ${linkMargin} ${s.y},
+            ${linkMargin} ${d.y},
+            ${linkMargin} ${d.y}`
 
     return path
   }
