@@ -16,35 +16,36 @@
 
     <!-- your script file -->
     <script src="js/BarChart.js"></script>
+    <script src="js/TreeMap.js"></script>
     <script src="js/scroll.js"></script>
     <script src="js/main.js"></script>
 </head>
 <body>
+    <div id='nav-bar'></div>
     <div class="container" ng-app="myApp" id="app" ng-controller="MainController">
         <h1>Global Terrorism</h1>
         <div id="sandbox">
             
             <div id='graphic'>
-                <div id='nav-bar'>
-                </div>
+                <!--<div id='nav-bar'></div>-->
 
                 <div id='sections'>
-                    <section class="step">
+                    <section class="step" id="landing">
                         <div class="title">Landing</div>
                     </section>
-                    <section class="step">
+                    <section class="step" id="glance">
                         <div class="title">At a Glance</div>
                     </section>
-                    <section class="step">
+                    <section class="step" id="incidents">
                         <div class="title">Count of Incidents</div>
                     </section>
-                    <section class="step">
+                    <section class="step" id="ransom">
                         <div class="title">Highest Ransom</div>
                     </section>
-                    <section class="step">
+                    <section class="step" id="cause">
                         <div class="title">Cause and Frequency of Attacks</div>
                     </section>
-                    <section class="step">
+                    <section class="step" id="claims">
                         <div class="title">Common Methods of Claims</div>
                     </section>
                 </div>
