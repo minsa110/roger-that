@@ -54,3 +54,7 @@ form {
   display: inline-block;
   position: fixed;
 }
+
+#map {
+    height: 100%;
+}
